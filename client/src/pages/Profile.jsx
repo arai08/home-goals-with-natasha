@@ -214,7 +214,9 @@ export default function Profile() {
                 <button onClick={ () => handleListingDelete(listing._id) } className="text-red-700 uppercase">Delete</button>
                 <p className="text-red-700 mt-5">{deleteListingError ? 'Error deleting listing' : ''}</p>
 
-                <button className="text-slate-700 uppercase">Edit</button>
+                <Link to={`/update-listing/${listing._id}`}>
+                  <button className="text-slate-700 uppercase">Edit</button>
+                </Link>
               </div>
             </div>
           ))}
