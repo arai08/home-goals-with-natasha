@@ -14,6 +14,7 @@ export default function Profile() {
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [showListingsError, setShowListingsError] = useState(false);
+  const [deleteListingError, setDeleteListingError] = useState(false);
   const [userListings, setUserListings] = useState([]);
   const dispatch = useDispatch();
 
@@ -134,6 +135,27 @@ export default function Profile() {
     }
   };
 
+  const handleListingDelete = async (listingId) => {
+    try {
+      setDeleteListingError(false);
+      const res = await fetch(`/api/listing/delete/${listingId}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        setDeleteListingError(true);
+        return;
+      }
+
+      setUserListings( (prev) => 
+        prev.filter( (listing) => listing._id !== listingId )
+    );
+    }
+    catch (error) {
+      setDeleteListingError(true);
+    }
+  };
+
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
@@ -189,7 +211,9 @@ export default function Profile() {
               </Link>
 
               <div className="flex flex-col items-center">
-                <button className="text-red-700 uppercase">Delete</button>
+                <button onClick={ () => handleListingDelete(listing._id) } className="text-red-700 uppercase">Delete</button>
+                <p className="text-red-700 mt-5">{deleteListingError ? 'Error deleting listing' : ''}</p>
+
                 <button className="text-slate-700 uppercase">Edit</button>
               </div>
             </div>
