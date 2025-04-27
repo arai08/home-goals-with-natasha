@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
-import { Navigation } from 'swiper/modules';
+import { Navigation, Autoplay } from 'swiper/modules';
 import 'swiper/css/bundle';
 import ListingItem from '../components/ListingItem';
 
@@ -12,7 +12,7 @@ export default function Home() {
   const [saleListings, setSaleListings] = useState([]);
   const [rentListings, setRentListings] = useState([]);
 
-  SwiperCore.use([Navigation]);
+  SwiperCore.use([Navigation, Autoplay]);
 
   useEffect(() => {
     const fetchOfferListings = async () => {
@@ -71,16 +71,21 @@ export default function Home() {
         </div>
 
       {/* swiper */}
-        <Swiper navigation>
-        {
-          offerListings && offerListings.length > 0 &&
-          offerListings.map((listing) => (
+      {
+        <Swiper navigation autoplay={{ delay: 5000, disableOnInteraction: false}} >
+          {['/static/home-1.jpeg', '/static/home-2.jpeg', '/static/home-3.jpeg', '/static/home-4.jpeg'].map((image, index) => (
             <SwiperSlide>
-              <div style={{background: `url(${listing.imageUrls[0]}) center no-repeat`, backgroundSize: "cover"}} className='h-[500px]' key={listing._id}></div>
+              <div
+                style={{
+                  background: `url(${image}) center no-repeat`,
+                  backgroundSize: 'cover',
+                }}
+                className="h-[500px]"
+              ></div>
             </SwiperSlide>
-          ))
-        }
+          ))}
         </Swiper>
+      }
 
       {/* listing results for offer, sale and rent */}
 
