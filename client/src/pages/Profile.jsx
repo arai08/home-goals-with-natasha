@@ -173,6 +173,8 @@ export default function Profile() {
             ) : ''
           }
         </p>
+        <input type="text" placeholder="Name" defaultValue={currentUser.name} id="name" className='border p-3 rounded-lg' onChange={handleChange}/>
+        <input type="text" placeholder="Phone" defaultValue={currentUser.phone} id="phone" className='border p-3 rounded-lg' onChange={handleChange}/>
         <input type="text" placeholder="Username" defaultValue={currentUser.username} id="username" className='border p-3 rounded-lg' onChange={handleChange}/>
         <input type="email" placeholder="Email" id="email" defaultValue={currentUser.email} className='border p-3 rounded-lg' onChange={handleChange}/>
         <input type="password" placeholder="Password" id="password" className='border p-3 rounded-lg' onChange={handleChange}/>
@@ -181,9 +183,11 @@ export default function Profile() {
           {loading ? 'Loading...' : 'Update'}
         </button>
 
-        <Link className="bg-green-700 text-white p-3 rounded-lg uppercase text-center hover:opacity-95" to={"/create-listing"}>
-          Create Listing
-        </Link>
+        {currentUser.isAdmin && (
+          <Link className="bg-green-700 text-white p-3 rounded-lg uppercase text-center hover:opacity-95" to={"/create-listing"}>
+            Create Listing
+          </Link>
+        )}
       </form>
 
       <div className="flex justify-between mt-5">
@@ -194,8 +198,12 @@ export default function Profile() {
       <p className="text-red-700 mt-5"> {error ? error : ''} </p>
       <p className="text-green-700 mt-5"> {updateSuccess ? 'Profile updated successfully' : ''} </p>
 
-      <button onClick={handleShowListings} className="text-green-700 w-full"> Show Listings </button>
-      <p className="text-red-700 mt-5">{showListingsError ? 'Error showing listings' : ''}</p>
+      { currentUser.isAdmin && (
+        <div>
+          <button onClick={handleShowListings} className="text-green-700 w-full"> Show My Listings </button>
+          <p className="text-red-700 mt-5">{showListingsError ? 'Error showing listings' : ''}</p>
+        </div>
+      )}
 
       {userListings && userListings.length > 0 && 
         <div className="flex flex-col gap-4"> 
