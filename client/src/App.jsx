@@ -4,6 +4,7 @@ import Profile from "./pages/Profile"
 import SignUp from "./pages/SignUp"
 import SignIn from "./pages/SignIn"
 import About from "./pages/About"
+import Blog from "./pages/Blog"
 import Testimonial from "./pages/Testimonial"
 import ContactMe from "./pages/ContactMe"
 import CreateListing from "./pages/CreateListing"
@@ -22,6 +23,7 @@ export default function App() {
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/about" element={<About />} />
+        <Route path="/blog" element={<Blog />} />
         <Route path="/testimonial" element={<Testimonial />} />
         <Route path="/contact-me" element={<ContactMe />} />
         <Route path="/search" element={<Search />} />
